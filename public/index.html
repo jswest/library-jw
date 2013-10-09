@@ -59,7 +59,7 @@
 				<div class="form-item">
 					<label>Title</label>
 					<% if ( title ) { %>
-						<input id="title-input" type="text" value="<% title %>">
+						<input id="title-input" type="text" value="<%= title %>">
 					<% } else { %>
 						<input id="title-input" type="text">
 					<% } %>					
@@ -81,64 +81,18 @@
 					<input id="new-tags-input" type="text">
 				</div>
 				<div class="form-item">
-					<input class="submit" type="submit" value="save">
-				</div>
-			</form>
-		</script>
-		<script id="new-book-template" type="text/template">
-			<form id="new-book-form" class="niceform">
-				<header class="form-header">
-					<h1 class="form-title">New Book</h1>
-				</header>
-				<div class="form-item">
-					<label>Title</label>
-					<input id="title-input" type="text">
-				</div>
-				<div id="existing-authors-item" class="form-item">
-					<label>Existing Authors</label>
-					<input id="authors-input" type="text">
-				</div>
-				<div class="form-item">
-					<label>New Authors</label>
-					<input id="new-authors-input" type="text">
-				</div>
-				<div id="existing-tags-item" class="form-item">
-					<label>Existing Tags</label>
-					<input id="tags-input" type="text">
-				</div>
-				<div class="form-item">
-					<label>New Tags</label>
-					<input id="new-tags-input" type="text">
-				</div>
-				<div class="form-item">
-					<input class="submit" type="submit" value="save">
-				</div>
-			</form>
-		</script>
-		<script id="edit-book-template" type="text/template">
-			<form id="edit-book-form" class="niceform">
-				<header class="form-header">
-					<h1 class="form-title">Edit Book</h1>
-				</header>
-				<div class="form-item">
-					<label>Title</label>
-					<input id="title-input" type="text" value="<%= title %>">
-				</div>
-				<div id="existing-authors-item" class="form-item">
-					<label>Existing Authors</label>
-					<input id="authors-input" type="text">
-				</div>
-				<div class="form-item">
-					<label>New Authors</label>
-					<input id="new-authors-input" type="text">
-				</div>
-				<div id="existing-tags-item" class="form-item">
-					<label>Existing Tags</label>
-					<input id="tags-input" type="text">
-				</div>
-				<div class="form-item">
-					<label>New Tags</label>
-					<input id="new-tags-input" type="text">
+					<div>
+						<label>Fully Completed</label>
+						<input type="radio" name="completed" value="2">
+					</div>
+					<div>
+						<label>Partially Completed</label>
+						<input type="radio" name="completed" value="1">
+					</div>
+					<div>
+						<label>Not Completed</label>
+						<input type="radio" name="completed" value="0">
+					</div>
 				</div>
 				<div class="form-item">
 					<input class="submit" type="submit" value="save">
@@ -174,8 +128,21 @@
 			</td>
 		</script>
 		<script id="book-search-template" type="text/template">
-			<li class="result-book">
+			<% if ( completed === '2' ) {%>
+				<li class="result-book completed-2">
+			<% } else if ( completed === '1' ) {%>
+				<li class="result-book completed-1">
+			<% } else { %>
+				<li class="result-book completed-0">
+			<% } %>
 				<p class="edit"><a href="#book/<%= _id %>/edit">edit</a></p>
+				<p class="inout">
+					<% if ( inOut === 'in' ) { %>
+						<a href="#checkout/<%= _id %>">check out</a>
+					<% } else { %>
+						<a href="#checkin/<%= _id %>">check in</a>
+					<% } %>
+				</p>
 				<h1><%= title %></h1>
 				<ul class="authors">
 					<% for ( var i = 0; i < authors.length; i++ ) { %>

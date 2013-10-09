@@ -1,3 +1,51 @@
+( function() {
+
+var bookSubmitHandler = function ( e, model, isNew ) {
+	e.preventDefault();
+	var tags = [];
+	var existingTags = $('#existing-tags-item').find( 'li.token-input-token' );
+	existingTags.each( function() {
+		tags.push( $(this).find( 'p' ).html() );
+	});
+	var newTags = $('#new-tags-input').val();
+	newTags = newTags.split( ';' );
+	for ( var i = 0; i < newTags.length; i++ ) {
+		var newTag = $.trim( newTags[i] );
+		if ( newTag !== '' ) {
+			tags.push( newTag.toLowerCase() );
+		}
+	}
+	var authors = [];
+	var existingAuthors = $('#existing-authors-item').find( 'li.token-input-token' );
+	existingAuthors.each( function() {
+		authors.push( $(this).find( 'p' ).html() );
+	});
+	var newAuthors = $('#new-authors-input').val();
+	newAuthors = newAuthors.split( ';' );
+	for ( var i = 0; i < newAuthors.length; i++ ) {
+		var newAuthor = $.trim( newAuthors[i] );
+		if ( newAuthor !== '' ) {
+			authors.push( newAuthor.toLowerCase() );
+		}
+	}
+	if ( isNew ) {
+		model.url = '/book';
+	}
+	model.save(
+		{
+			'title': $('#title-input').val().toLowerCase(),
+			'authors': authors,
+			'tags': tags,
+			'completed': $('input[type=radio][name=completed]:checked').val()
+		},
+		{
+			success: function( model ) {
+				LIB.router.navigate( '/', { trigger: true } );
+			}
+		}
+	);
+};
+
 LIB.Book = Backbone.Model.extend({
 	idAttribute: "_id",
 	url: function() {
@@ -32,42 +80,7 @@ LIB.NewBookView = Backbone.View.extend({
 		$('#tags-input').tokenInput( '/tag/search' );
 	},
 	submitHandler: function( e ) {
-		e.preventDefault();
-		var tags = [];
-		var existingTags = $('#existing-tags-item').find( 'li.token-input-token' );
-		existingTags.each( function() {
-			tags.push( $(this).find( 'p' ).html() );
-		});
-		var newTags = $('#new-tags-input').val();
-		newTags = newTags.split( ';' );
-		for ( var i = 0; i < newTags.length; i++ ) {
-			var newtag = $.trim( newTags[i] );
-			tags.push( newtag.toLowerCase() );
-		}
-		var authors = [];
-		var existingAuthors = $('#existing-authors-item').find( 'li.token-input-token' );
-		existingAuthors.each( function() {
-			authors.push( $(this).find( 'p' ).html() );
-		});
-		var newAuthors = $('#new-authors-input').val();
-		newAuthors = newAuthors.split( ';' );
-		for ( var i = 0; i < newAuthors.length; i++ ) {
-			var newAuthor = $.trim( newAuthors[i] );
-			authors.push( newAuthor.toLowerCase() );
-		}
-		this.model.url = '/book';
-		this.model.save(
-			{
-				'title': $('#title-input').val().toLowerCase(),
-				'authors': authors,
-				'tags': tags
-			},
-			{
-				success: function( model ) {
-					LIB.router.navigate( '/', { trigger: true } );
-				}
-			}
-		);
+		bookSubmitHandler( e, this.model, true );
 	}
 });
 LIB.EditBookView = Backbone.View.extend({
@@ -95,45 +108,7 @@ LIB.EditBookView = Backbone.View.extend({
 		} );
 	},
 	submitHandler: function( e ) {
-		e.preventDefault();
-		var tags = [];
-		var existingTags = $('#existing-tags-item').find( 'li.token-input-token' );
-		existingTags.each( function() {
-			tags.push( $(this).find( 'p' ).html() );
-		});
-		var newTags = $('#new-tags-input').val();
-		newTags = newTags.split( ';' );
-		for ( var i = 0; i < newTags.length; i++ ) {
-			var newTag = $.trim( newTags[i] );
-			if ( newTag !== '' ) {
-				tags.push( newTag.toLowerCase() );
-			}
-		}
-		var authors = [];
-		var existingAuthors = $('#existing-authors-item').find( 'li.token-input-token' );
-		existingAuthors.each( function() {
-			authors.push( $(this).find( 'p' ).html() );
-		});
-		var newAuthors = $('#new-authors-input').val();
-		newAuthors = newAuthors.split( ';' );
-		for ( var i = 0; i < newAuthors.length; i++ ) {
-			var newAuthor = $.trim( newAuthors[i] );
-			if ( newAuthor !== '' ) {
-				authors.push( newAuthor.toLowerCase() );
-			}
-		}
-		this.model.save(
-			{
-				'title': $('#title-input').val().toLowerCase(),
-				'authors': authors,
-				'tags': tags
-			},
-			{
-				success: function ( model ) {
-					LIB.router.navigate( '/', { trigger: true } );
-				}
-			}
-		);
+		bookSubmitHandler( e, this.model, false );
 	}
 });
 LIB.AllBooksView = Backbone.View.extend({
@@ -175,3 +150,5 @@ LIB.BookView = Backbone.View.extend({
 		LIB.router.navigate( 'book/' + this.model.get( '_id' ) + '/edit', { trigger: true } );
 	}
 });
+
+})();

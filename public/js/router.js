@@ -4,7 +4,9 @@ LIB.Router = Backbone.Router.extend({
 		'': 'home',
 		'book/new': 'newBook',
 		'books': 'allBooks',
-		'book/:bookId/edit': 'editBook'
+		'book/:bookId/edit': 'editBook',
+		'checkout/:bookId': 'checkout',
+		'checkin/:bookId': 'checkin'
 	},
 
 	home: function() {
@@ -30,6 +32,27 @@ LIB.Router = Backbone.Router.extend({
 				editBookView.render();
 			}
 		})
+	},
+
+	checkout: function ( bookId ) {
+		$.ajax({
+			method: 'POST',
+			url: '/checkout',
+			data: { bookId: bookId },
+			success: function () {
+				Backbone.history.navigate( '/', { trigger: true } );
+			}
+		});
+	},
+	checkin: function ( bookId ) {
+		$.ajax({
+			method: 'DELETE',
+			url: '/checkout/' + bookId,
+			success: function () {
+				Backbone.history.navigate( '/', { trigger: true } );
+			}
+		});
 	}
+
 
 });

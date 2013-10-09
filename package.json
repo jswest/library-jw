@@ -1,7 +1,7 @@
 {
 	"name": "library-jw",
 	"description": "A modest library app for personal use.",
-	"version": "0.0.1",
+	"version": "0.3.0",
 	"private": true,
 	"dependencies": {
 		"express": "3.4.0",

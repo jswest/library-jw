@@ -4,7 +4,7 @@ LIB.HomepageView = Backbone.View.extend({
 	render: function() {
 		var template = _.template( $('#homepage-template').html(), {} );
 		$('#content-wrapper').html( $(this.el).html( template ) );
-		$(document).on( 'keyup', this.keydownHandler );
+		$(document).on( 'keydown', this.keydownHandler );
 	},
 	keydownHandler: function( e ) {
 		var inputVal = $('#homepage-search-form').find( 'input' ).val();
@@ -21,6 +21,7 @@ LIB.HomepageView = Backbone.View.extend({
 						data[i].tags.sort();
 						data[i].authors.sort();
 						var template = _.template( $('#book-search-template').html(), data[i] );
+						console.log( data[i] );
 						$('#results').append( template );
 						if ( i % 4 === 0 ) {
 							$('#results').children( '.result-book' ).eq( i + 1 ).addClass( 'fth' );
@@ -33,5 +34,5 @@ LIB.HomepageView = Backbone.View.extend({
 		else if ( inputVal.length <= 2 ) {
 			$('#results').html( '' );
 		}
-	}
+	},
 });
