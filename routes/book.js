@@ -8,12 +8,15 @@ exports.create = function ( req, res ) {
 	var title = req.body.title;
 	var authors = req.body.authors;
 	var tags = req.body.tags;
+	var completed = req.body.completed;
 	var books = db.collection( 'books' );
 	books.insert(
 		{
 			'title': title,
 			'authors': authors,
-			'tags': tags	
+			'tags': tags,
+			'inOut': 'in',
+			'checkouts': []
 		},
 		{ w: 1 },
 		function( error, object ) {
@@ -44,13 +47,17 @@ exports.update = function ( req, res ) {
 	var title = req.body.title;
 	var authors = req.body.authors;
 	var tags = req.body.tags;
+	var completed = req.body.completed;
 	var books = db.collection( 'books' );
 	books.update(
 		{ '_id': new ObjectID( bookId ) },
 		{
-			'title': title,
-			'authors': authors,
-			'tags': tags
+			$set: {
+				'title': title,
+				'authors': authors,
+				'tags': tags,
+				'completed': completed	
+			}
 		},
 		{ w: 1 },
 		function ( error, numberOfUpdatedObjects ) {
