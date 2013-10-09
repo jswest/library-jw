@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+<head>
+	
+	<title>Spaulding Avenue Library</title>
+	
+	<link href="css/style.css" rel="stylesheet" type="text/css">
+
+	<script src="js/src/jquery.js" type="text/javascript"></script>
+	<script src="js/src/jquery.tokeninput.js" type="text/javascript"></script>
+	<script src="js/src/underscore.js" type="text/javascript"></script>
+	<script src="js/src/backbone.js" type="text/javascript"></script>
+
+	<script type="text/javascript">
+		LIB = {};
+	</script>
+	
+	<script src="js/app.js" type="text/javascript"></script>
+	<script src="js/lib/book.js" type="text/javascript"></script>
+	<script src="js/router.js" type="text/javascript"></script>
+
+	<script type="text/javascript">
+		$(document).ready( function() {
+			LIB.router = new LIB.Router();
+			Backbone.history.start();
+		});
+	</script>
+
+</head>
+<body>
+
+	<div id="templates">
+		<script id="homepage-template" type="text/template">
+			<div id="bg"></div>
+			<header id="homepage-header">
+				<h1 id="homepage-title">Spaulding Avenue Library</h1>
+				<h2>Type to search</h2>
+			</header>
+			<form id="homepage-search-form">
+				<header id="search-form-header" class="form-header">
+					<h1>Search Spauling Avenue Library</h1>
+					<h2>Just type...</h2>
+				</header>
+				<input id="homepage-search-bar" type="text"></input>
+			</form>
+			<ul id="results"></ul>
+		</script>
+		<script id="book-template" type="text/template">
+			<form id="book-form" class="niceform">
+				<header class="form-header">
+					<h1 class="form-title">
+						<% if ( _id ) { %>
+							Edit Book
+						<% } else { %>
+							New Book
+						<% } %>
+					</h1>
+				</header>
+				<div class="form-item">
+					<label>Title</label>
+					<% if ( title ) { %>
+						<input id="title-input" type="text" value="<% title %>">
+					<% } else { %>
+						<input id="title-input" type="text">
+					<% } %>					
+				</div>
+				<div id="existing-authors-item" class="form-item">
+					<label>Existing Authors</label>
+					<input id="authors-input" type="text">
+				</div>
+				<div class="form-item">
+					<label>New Authors</label>
+					<input id="new-authors-input" type="text">
+				</div>
+				<div id="existing-tags-item" class="form-item">
+					<label>Existing Tags</label>
+					<input id="tags-input" type="text">
+				</div>
+				<div class="form-item">
+					<label>New Tags</label>
+					<input id="new-tags-input" type="text">
+				</div>
+				<div class="form-item">
+					<input class="submit" type="submit" value="save">
+				</div>
+			</form>
+		</script>
+		<script id="new-book-template" type="text/template">
+			<form id="new-book-form" class="niceform">
+				<header class="form-header">
+					<h1 class="form-title">New Book</h1>
+				</header>
+				<div class="form-item">
+					<label>Title</label>
+					<input id="title-input" type="text">
+				</div>
+				<div id="existing-authors-item" class="form-item">
+					<label>Existing Authors</label>
+					<input id="authors-input" type="text">
+				</div>
+				<div class="form-item">
+					<label>New Authors</label>
+					<input id="new-authors-input" type="text">
+				</div>
+				<div id="existing-tags-item" class="form-item">
+					<label>Existing Tags</label>
+					<input id="tags-input" type="text">
+				</div>
+				<div class="form-item">
+					<label>New Tags</label>
+					<input id="new-tags-input" type="text">
+				</div>
+				<div class="form-item">
+					<input class="submit" type="submit" value="save">
+				</div>
+			</form>
+		</script>
+		<script id="edit-book-template" type="text/template">
+			<form id="edit-book-form" class="niceform">
+				<header class="form-header">
+					<h1 class="form-title">Edit Book</h1>
+				</header>
+				<div class="form-item">
+					<label>Title</label>
+					<input id="title-input" type="text" value="<%= title %>">
+				</div>
+				<div id="existing-authors-item" class="form-item">
+					<label>Existing Authors</label>
+					<input id="authors-input" type="text">
+				</div>
+				<div class="form-item">
+					<label>New Authors</label>
+					<input id="new-authors-input" type="text">
+				</div>
+				<div id="existing-tags-item" class="form-item">
+					<label>Existing Tags</label>
+					<input id="tags-input" type="text">
+				</div>
+				<div class="form-item">
+					<label>New Tags</label>
+					<input id="new-tags-input" type="text">
+				</div>
+				<div class="form-item">
+					<input class="submit" type="submit" value="save">
+				</div>
+			</form>
+		</script>
+		<script id="all-books-template" type="text/template">
+			<table>
+				<tr>
+					<th></th>
+					<th>Title</th>
+					<th>Authors</th>
+					<th>Tags</th>
+				</tr>
+			</table>
+		</script>
+		<script id="book-table-view" type="text/template">
+			<td class="x">x</td>
+			<td class="title"><%= title %>
+			<td class="authors">
+				<ul>
+				<% for ( var i = 0; i < authors.length; i++ ) { %>
+					<li><%= authors[i] %></li>
+				<% } %>
+				</ul>
+			</td>
+			<td class="tags">
+				<ul>
+				<% for ( var i = 0; i < tags.length; i++ ) { %>
+					<li><%= tags[i] %></li>
+				<% } %>
+				</ul>
+			</td>
+		</script>
+		<script id="book-search-template" type="text/template">
+			<li class="result-book">
+				<p class="edit"><a href="#book/<%= _id %>/edit">edit</a></p>
+				<h1><%= title %></h1>
+				<ul class="authors">
+					<% for ( var i = 0; i < authors.length; i++ ) { %>
+						<li><%= authors[i] %></li>
+					<% } %>
+				</ul>
+				<ul class="tags">
+					<% for ( var i = 0; i < tags.length; i++ ) { %>
+						<li><%= tags[i] %></li>
+					<% } %>
+				</ul>
+			</li>
+		</script>
+	</div>
+
+	<div id="content-wrapper">
+		<div id="inner-wrapper"></div>
+	</div>
+
+</body>
+</html>

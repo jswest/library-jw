@@ -1,0 +1,239 @@
+* {
+	margin: 0;
+	padding: 0; }
+h1, h2,
+h3, h4,
+h5, h6 {
+	font-family: "Helvetica Neue";
+	font-weight: 400; }
+h1 { font-size: 50px; }
+h2 { font-size: 20px; }
+.clear { clear: both; }
+a {
+	color: inherit;
+	text-decoration: none;
+}
+
+
+/* Big block elements.
+-----------------------------------*/
+html,
+body {
+	display: block;
+	position: relative;
+	width: 100%;
+	height: 100%;
+}
+#templates {
+	display: none;
+}
+#content-wrapper {
+	overflow: scroll;
+	position: absolute;
+	width: 100%;
+	height: 100%;
+}
+
+#homepage {
+	width: 100%;
+	height: 100%;
+}
+#bg {
+	background-image: url('/css/images/books.jpg');
+	opacity: .33;
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	z-index: -1;
+}
+#homepage-header {
+	width: 100%;
+	height: 200px;
+}
+#homepage-header h1 {
+	color: rgb(51,51,51);
+	font-size: 50px;
+	font-weight: 100;
+	padding: 50px 0 0 50px;
+}
+#homepage-header h2 {
+	color: rgb(102,102,102);
+	font-size: 13px;
+	font-weight: 800;
+	letter-spacing: 2px;
+	padding: 0 0 0 50px;
+	text-transform: uppercase;
+}
+#homepage-search-form input,
+#homepage-search-form header {
+	display: none;
+}
+#homepage.up form input,
+#homepage.up form header {
+	display: block;
+}
+#homepage.up #homepage-header {
+	display: none;
+}
+#homepage-search-form input {
+	background: transparent;
+	border: none;
+	color: rgb(51,51,51);
+	font-family: "Helvetica Neue";
+	font-size: 80px;
+	font-weight: 800;
+	line-height: 100px;
+	padding: 0 50px;
+	text-transform: uppercase;
+	width: 90%;
+	height: 100px;
+}
+#homepage-search-form input:focus {
+	outline: none;
+}
+#homepage-search-form h1 {
+	color: rgb(51,51,51);
+	font-size: 13px;
+	font-weight: 800;
+	padding: 50px 0 0 50px;
+	text-transform: uppercase;
+}
+#homepage-search-form h2 {
+	color: rgb(102,102,102);
+	font-size: 13px;
+	font-weight: 800;
+	margin: 0 0 0 50px;
+	text-transform: uppercase;
+}
+
+table {
+	border-collapse: collapse;
+}
+th, td {
+	border: 1px solid rgb(51,51,51);
+	font-family: "Helvetica Neue";
+	font-size: 13px;
+	padding: 5px;
+	text-align: left;
+	vertical-align: top;
+}
+th {
+	background-color: rgb(51,51,51);
+	color: rgb(255,255,255);
+}
+td li {
+	list-style: none;
+}
+td.x {
+	cursor: pointer;
+}
+
+.page {
+	margin: 0 auto;
+	width: 1300px;
+	height: auto; }
+form.niceform {
+	margin: 0 auto;
+	width: 600px;
+}
+.form-header h1 {
+	font-size: 26px;
+	font-weight: 100;
+	letter-spacing: 4px;
+	text-transform: uppercase; }
+.form-item {
+	margin: 20px 0;
+}
+label {
+	display: block;
+	font-family: "Helvetica Neue";
+	font-size: 13px;
+	font-weight: 800;
+	letter-spacing: 2px;
+	text-transform: uppercase; }
+input[type=text] {
+	background-color: rgb(200,200,200);
+	border: none;
+	font-size: 15px;
+	font-family: "Helvetica Neue";
+	margin-top: 5px;
+	padding: 10px;
+	width: 580px;
+	height: 20px; }
+input[type=text]:focus { outline: none; }
+ul.token-input-list {
+	background-color: rgb(200,200,200);
+	list-style: none;
+}
+.token-input-dropdown {
+	background-color: rgb(150,150,150);
+	padding: 0 0;
+	width: 600px;
+}
+.token-input-dropdown li {
+	font-family: "Helvetica Neue";
+	line-height: 40px;
+	list-style: none;
+	padding: 0 10px;
+	height: 40px;
+}
+.token-input-selected-dropdown-item {
+	background-color: rgb(125,125,125);
+}
+li.token-input-token {
+	line-height: 30px;
+	list-style: none;
+	position: relative;
+	width: 100%;
+	height: 30px;
+}
+li.token-input-token p {
+	float: left;
+	font-family: "Helvetica Neue";
+	margin-left: 30px;
+}
+.token-input-delete-token {
+	position: absolute;
+	top: 0;
+	left: 0;
+	text-align: center;
+	width: 30px;
+	height: 30px; }
+#results {
+	font-family: "Helvetica Neue";
+	font-size: 13px;
+	font-weight: 800;
+	letter-spacing: 2px;
+	list-style: none;
+	margin: 50px;
+}
+#results .edit {
+	cursor: pointer;
+	font-size: 11px;
+	letter-spacing: 0px;
+	margin-bottom: 2px;
+	text-align: right;
+	text-decoration: underline;
+}
+#results > li.result-book {
+	float: left;
+	margin-right: 4%;
+	margin-top: 20px;
+	width: 22%; }
+#results > li.fth {
+	margin-right: 0;
+}
+#results h1 {
+	font-size: 13px;
+	font-weight: 800;
+	text-transform: uppercase; }
+#results ul {
+	border-top: 1px solid rgb(51,51,51);
+	font-size: 13px;
+	font-weight: 400;
+	list-style: disc inside;
+	margin: 5px 0;
+	padding: 5px 0;
+}
+#results ul:last-child {
+	border-bottom: 1px solid rgb(51,51,51);
