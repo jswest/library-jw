@@ -21,10 +21,10 @@ LIB.HomepageView = Backbone.View.extend({
 						data[i].tags.sort();
 						data[i].authors.sort();
 						var template = _.template( $('#book-search-template').html(), data[i] );
-						console.log( data[i] );
 						$('#results').append( template );
 						if ( i % 4 === 0 ) {
-							$('#results').children( '.result-book' ).eq( i + 1 ).addClass( 'fth' );
+							console.log( i );
+							$('#results').children( '.result-book' ).eq( i ).addClass( 'fth' );
 							$('#results').append( '<li class="clear"></li>' );
 						}
 					}

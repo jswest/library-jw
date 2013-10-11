@@ -16,7 +16,8 @@ exports.create = function ( req, res ) {
 			'authors': authors,
 			'tags': tags,
 			'inOut': 'in',
-			'checkouts': []
+			'checkouts': [],
+			'completed': completed
 		},
 		{ w: 1 },
 		function( error, object ) {
