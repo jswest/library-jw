@@ -16,7 +16,8 @@ var MongoClient = require( 'mongodb' ).MongoClient
 // Get the routes variables.
 //
 var book = require( './routes/book' )
-,		checkout = require( './routes/checkout')
+,		checkout = require( './routes/checkout' )
+, 	user = require( '.routes/user' )
 
 //
 // Configure the app.
@@ -167,6 +168,13 @@ MongoClient.connect(
 			checkout.getDB( db );
 			app.post( '/checkout', checkout.create );
 			app.del( '/checkout/:id', checkout.destroy );
+
+			user.getDB( db );
+			app.post( '/user', user.create );
+			app.get( '/user', user.readAll );
+			app.get( '/user/:id', user.read );
+			app.put( '/user/:id', user.update );
+			app.del( '/user/:id', user.destroy );
 
 			//
 			// Start yer engines.

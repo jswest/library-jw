@@ -1,6 +1,6 @@
 # Library JW #
 ## A modest library app for personal use. ##
-### Version 0.3.1 ###
+### Version 0.3.2 ###
 
 ### What is it? ###
 A modest library app—meaning it contains only the most basic of systems for tagging books—for my personal library.
